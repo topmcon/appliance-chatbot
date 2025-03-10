@@ -1,0 +1,10 @@
+{
+    "refrigerator": {
+      "price": "$599",
+      "features": ["energy-efficient", "stainless steel"]
+    },
+    "washing-machine": {
+      "price": "$499",
+      "features": ["10kg capacity", "quick wash"]
+    }
+  }

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grok Chatbot</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chatbox { width: 400px; margin: 20px auto; }
+        #messages { border: 1px solid #ccc; height: 200px; overflow-y: scroll; padding: 10px; }
+        #input { width: 100%; padding: 10px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <div id="messages"></div>
+        <input type="text" id="input" placeholder="Type your message...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <script>
+        async function sendMessage() {
+            const input = document.getElementById('input');
+            const message = input.value;
+            input.value = '';
+
+            // Display user message
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+
+            // Send message to backend
+            try {
+                const response = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+                const data = await response.json();
+                if (data.response) {
+                    messagesDiv.innerHTML += `<p><strong>Grok:</strong> ${data.response}</p>`;
+                } else {
+                    messagesDiv.innerHTML += `<p><strong>Error:</strong> ${data.error || 'Could not get response'}</p>`;
+                }
+            } catch (error) {
+                messagesDiv.innerHTML += `<p><strong>Error:</strong> Network error: ${error.message}</p>`;
+            }
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+    </script>
+</body>
+</html>
