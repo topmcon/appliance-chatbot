@@ -36,7 +36,7 @@
                 });
                 const data = await response.json();
                 if (data.response) {
-                    messagesDiv.innerHTML += `<p><strong>Grok:</strong> ${data.response}</p>`;
+                    messagesDiv.innerHTML += `<p><strong>Courtney:</strong> ${data.response}</p>`;
                 } else {
                     messagesDiv.innerHTML += `<p><strong>Error:</strong> ${data.error || 'Could not get response'}</p>`;
                 }
